@@ -6,8 +6,16 @@ function fileActions(error, episodes){
 		throw(error);
 	} else {
 		var parsedEpisodes = JSON.parse(episodes);
-		sortEpisodes(parsedEpisodes, episodePrinter);
+		var filteredEpisodes = filterBadEpisodes(parsedEpisodes)
+		sortEpisodes(filteredEpisodes, episodePrinter);
 	}
+}
+
+function filterBadEpisodes(episodes){
+	var highlyRated = episodes.filter(function(episode){
+		return episode.rating > 8.5
+	})
+	return highlyRated
 }
 
 function sortEpisodes(episodes, callback){
